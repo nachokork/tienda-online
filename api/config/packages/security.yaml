@@ -13,6 +13,10 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        #api:
+         #   pattern: ^/api
+          #  stateless: true
+           # jwt: ~
         main:
             lazy: true
             provider: app_user_provider
@@ -23,6 +27,8 @@ security:
             json_login:
                 # api_login is a route we will create below
                 check_path: api_login
+            logout:
+                path: /logout
         login:
             pattern: ^/api/login
             stateless: true
@@ -30,10 +36,6 @@ security:
                 check_path: /api/login_check
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
-        api:
-            pattern: ^/api
-            stateless: true
-            jwt: ~
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -45,7 +47,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
-        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+       # - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 

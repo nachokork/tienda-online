@@ -40,6 +40,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?DateTimeImmutable $updatedAt = null;
 
+    #[ORM\OneToOne(targetEntity: Card::class, inversedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Card $card = null;
+
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
     public function updatedTimestamps(): void
